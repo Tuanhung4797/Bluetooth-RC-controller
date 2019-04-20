@@ -10,4 +10,4 @@ Commands/characters sent to the car
 - Backward: B
 - Left    : L
 - Right   : R
-- Slider speed  sending text: 0 - 100
+- Slider speed : 0 - 9
