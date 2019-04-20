@@ -6,6 +6,7 @@ This is a project about control robots with bluetooth app
 
 # Bluetooth app
 Commands/characters sent to the car
+- Stop: S
 - Forward : F
 - Backward: B
 - Left    : L
