@@ -1,7 +1,7 @@
 /*
  *  Project: Bluetooth RC Controller
  *  Hardware: Arduino, L298 Module, HC06 bluetooth
- *  Bluetooth app: https://github.com/Tuanhung4797/Bluetooth-RC-controller/blob/master/Android%20app/BluetoothRCcontroller.apk
+ *  Bluetooth app: https://github.com/Tuanhung4797/Bluetooth-RC-controller/blob/master/Android%20app/Bluetooth_RC_Controller.apk
  *  Bluetooth app is built on MIT App Inventor platform
  *  Author: Tuan Hung
  *  Github: https://github.com/Tuanhung4797
