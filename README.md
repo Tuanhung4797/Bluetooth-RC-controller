@@ -11,4 +11,8 @@ Commands/characters sent to the car
 - Backward: B
 - Left    : L
 - Right   : R
+- Forward Left : G
+- Forward Right : I
+- Backward Left : H
+- Backward Right : J
 - Slider speed : 0 - 9
