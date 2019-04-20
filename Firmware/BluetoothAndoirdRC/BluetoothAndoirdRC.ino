@@ -1,7 +1,7 @@
 /*
  *  Project: Bluetooth RC Controller
  *  Hardware: Arduino, L298 Module, HC06 bluetooth
- *  Bluetooth app: 
+ *  Bluetooth app: https://github.com/Tuanhung4797/Bluetooth-RC-controller/blob/master/Android%20app/BluetoothRCcontroller.apk
  *  Bluetooth app is built on MIT App Inventor platform
  *  Author: Tuan Hung
  *  Github: https://github.com/Tuanhung4797
@@ -71,13 +71,13 @@ void readData()
   while(BT.available()){
     if(BT.available() > 0){
       data = BT.read();
-      if((data != 'S') && (data != 'F') && (data != 'B') && (data != 'R') && (data != 'L')){ // If data is not the directions //Data is speed text
-        slider += data; //Store the data by creating a phrase
-      }
-      else{
+      //if((data != 'S') && (data != 'F') && (data != 'B') && (data != 'R') && (data != 'L')){ // If data is not the directions //Data is speed
+       // slider += data; //Store the data by creating a phrase
+     // }
+    //  else{
         Direction = data;
         Serial.println(String("Data: ") + Direction);
-      }
+     // }
     }
   }
   State = PARSING;
@@ -86,7 +86,7 @@ void parseData()
 {
   if(slider.length() > 0){ //If there is data
     Speed = slider.toInt(); //Convert to numerical value
-    Speed = map(Speed,0,100,0,255); 
+    Speed = map(Speed,0,10,0,255); 
     Serial.println(String("Speed: ") + Speed);
   }
   slider = ""; //Clear buffer
