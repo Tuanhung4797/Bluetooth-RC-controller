@@ -9,7 +9,8 @@
 
 #include <SoftwareSerial.h>
 
-#define DEBUG 1
+//#define DEBUG 1
+#define DEBUG_DATA 1
 
 #define READ_BLUETOOTH 0
 #define PARSING 1
@@ -52,13 +53,18 @@ void loop()
 {
   if(BT.available() > 0){
       data = BT.read();
-      if((data != 'S') && (data != 'F') && (data != 'B') && (data != 'R') && (data != 'L')){ // If data is not the directions //Data is speed
+      if((data != 'S') && (data != 'F') && (data != 'B') && (data != 'R') && (data != 'L') && (data != 'G') && (data != 'I') && (data != 'H') && (data != 'J')){ 
+      // If data is not the directions => Data is speed
         char_Speed = data;
-        Serial.println(String("Speed: ") + char_Speed);
+        #ifdef DEBUG_DATA
+          Serial.println(String("Speed: ") + char_Speed);
+        #endif
       }
       else{
         Direction = data;
-        Serial.println(String("Data: ") + Direction);
+        #ifdef DEBUG_DATA
+          Serial.println(String("Data: ") + Direction);
+        #endif
       }
       //////// convert speed ////////
       switch (char_Speed){
@@ -107,19 +113,51 @@ void Moving(char MoveID, int V)
       break;
     case 'F':
       forward(Speeds,Speeds);
-      Serial.println(String("Forward - Speed: ") + Speeds);
+      #ifdef DEBUG
+        Serial.println(String("Forward - Speed: ") + Speeds);
+      #endif
       break;
     case 'B':
       backward(Speeds,Speeds);
-      Serial.println(String("Backward - Speed: ") + Speeds);
+      #ifdef DEBUG
+        Serial.println(String("Backward - Speed: ") + Speeds);
+      #endif
       break;
     case 'L':
       turnLeft(Speeds);
-      Serial.println(String("Turn Left - Speed: ") + Speeds);
+      #ifdef DEBUG
+        Serial.println(String("Turn Left - Speed: ") + Speeds);
+      #endif
       break;
     case 'R':
       turnRight(Speeds);
-      Serial.println(String("Turn Right - Speed: ") + Speeds);
+      #ifdef DEBUG
+        Serial.println(String("Turn Right - Speed: ") + Speeds);
+      #endif
+      break;
+    case 'G':
+      forward(Speeds/2,Speeds);
+      #ifdef DEBUG
+        Serial.println(String("Forward Left - Speed: ") + Speeds);
+      #endif
+      break;
+    case 'I':
+      forward(Speeds,Speeds/2);
+      #ifdef DEBUG
+        Serial.println(String("Forward Right - Speed: ") + Speeds);
+      #endif
+      break;
+    case 'H':
+      backward(Speeds/2,Speeds);
+      #ifdef DEBUG
+        Serial.println(String("Backward Left - Speed: ") + Speeds);
+      #endif
+      break;
+    case 'J':
+      backward(Speeds,Speeds/2);
+      #ifdef DEBUG
+        Serial.println(String("Backward Right - Speed: ") + Speeds);
+      #endif
       break;
   }
 }
