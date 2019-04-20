@@ -12,12 +12,6 @@
 //#define DEBUG 1
 #define DEBUG_DATA 1
 
-#define READ_BLUETOOTH 0
-#define PARSING 1
-#define MOVING 2
-
-int State = 0;
-
 #define BT_Tx_Pin 7 // The pins of HC06
 #define BT_Rx_Pin 8
 
