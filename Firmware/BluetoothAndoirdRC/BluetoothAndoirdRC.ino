@@ -30,8 +30,8 @@ int State = 0;
 SoftwareSerial BT(BT_Rx_Pin,BT_Tx_Pin);
 char data; //Data read from bluetooth
 char Direction; //direction moving
-int  Speed = 255;
-String slider; //To store some string
+char char_Speed; 
+int  Speed = 100;
 
 void setup() {
   pinMode(IN1, OUTPUT); 
@@ -50,68 +50,78 @@ void setup() {
 
 void loop()
 {
-  switch (State){
-    case READ_BLUETOOTH:{
-      readData();
-      break;
-    }
-    case PARSING:{
-      parseData();
-      break;
-    }
-    case MOVING:{
-      Moving(Direction, Speed);
-      break;
-    }
-  }
-}
-
-void readData()
-{
-  while(BT.available()){
-    if(BT.available() > 0){
+  if(BT.available() > 0){
       data = BT.read();
-      //if((data != 'S') && (data != 'F') && (data != 'B') && (data != 'R') && (data != 'L')){ // If data is not the directions //Data is speed
-       // slider += data; //Store the data by creating a phrase
-     // }
-    //  else{
+      if((data != 'S') && (data != 'F') && (data != 'B') && (data != 'R') && (data != 'L')){ // If data is not the directions //Data is speed
+        char_Speed = data;
+        Serial.println(String("Speed: ") + char_Speed);
+      }
+      else{
         Direction = data;
         Serial.println(String("Data: ") + Direction);
-     // }
-    }
-  }
-  State = PARSING;
+      }
+      //////// convert speed ////////
+      switch (char_Speed){
+        case '0':
+          Speed = 10;
+          break;
+        case '1':
+          Speed = 20;
+          break;  
+        case '2':
+          Speed = 30;
+          break; 
+        case '3':
+          Speed = 40;
+          break;
+        case '4':
+          Speed = 50;
+          break;  
+        case '5':
+          Speed = 60;
+          break;
+        case '6':
+          Speed = 70;
+          break;
+        case '7':
+          Speed = 80;
+          break;
+        case '8':
+          Speed = 90;
+          break;
+        case '9':
+          Speed = 100;
+          break;
+      }
+   }
+   Moving(Direction,Speed);
 }
-void parseData()
+
+void Moving(char MoveID, int V)
 {
-  if(slider.length() > 0){ //If there is data
-    Speed = slider.toInt(); //Convert to numerical value
-    Speed = map(Speed,0,10,0,255); 
-    Serial.println(String("Speed: ") + Speed);
-  }
-  slider = ""; //Clear buffer
-  State = MOVING;
-}
-void Moving(char MoveID, int Speeds)
-{
+  int Speeds = map(V,0,100,0,255);
   switch(MoveID){
     case 'S':
       stop();
+      //Serial.println("STOP");
       break;
     case 'F':
       forward(Speeds,Speeds);
+      Serial.println(String("Forward - Speed: ") + Speeds);
       break;
     case 'B':
       backward(Speeds,Speeds);
+      Serial.println(String("Backward - Speed: ") + Speeds);
       break;
     case 'L':
       turnLeft(Speeds);
+      Serial.println(String("Turn Left - Speed: ") + Speeds);
       break;
     case 'R':
       turnRight(Speeds);
+      Serial.println(String("Turn Right - Speed: ") + Speeds);
       break;
   }
-  State = READ_BLUETOOTH;
 }
 void stop()
 {
