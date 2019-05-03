@@ -1,4 +1,4 @@
-/*
+ /*
  *  Project: Bluetooth RC Controller
  *  Hardware: Arduino, L298 Module, HC06 bluetooth
  *  Bluetooth app: https://github.com/Tuanhung4797/Bluetooth-RC-controller/blob/master/Android%20app/Bluetooth_RC_Controller.apk
@@ -12,13 +12,13 @@
 //#define DEBUG 1
 #define DEBUG_DATA 1
 
-#define BT_Tx_Pin 7 // The pins of HC06
+#define BT_Tx_Pin 6 // The pins of HC06
 #define BT_Rx_Pin 8
 
 #define IN1 2 // The pins of L298 module
 #define IN2 3
-#define IN3 4
-#define IN4 5
+#define IN3 5
+#define IN4 4
 #define ENA 9
 #define ENB 10
 
@@ -130,25 +130,25 @@ void Moving(char MoveID, int V)
       #endif
       break;
     case 'G':
-      forward(Speeds/2,Speeds);
+      forward(Speeds,Speeds/2);
       #ifdef DEBUG
         Serial.println(String("Forward Left - Speed: ") + Speeds);
       #endif
       break;
     case 'I':
-      forward(Speeds,Speeds/2);
+      forward(Speeds/2,Speeds);
       #ifdef DEBUG
         Serial.println(String("Forward Right - Speed: ") + Speeds);
       #endif
       break;
     case 'H':
-      backward(Speeds/2,Speeds);
+      backward(Speeds,Speeds/2);
       #ifdef DEBUG
         Serial.println(String("Backward Left - Speed: ") + Speeds);
       #endif
       break;
     case 'J':
-      backward(Speeds,Speeds/2);
+      backward(Speeds/2,Speeds);
       #ifdef DEBUG
         Serial.println(String("Backward Right - Speed: ") + Speeds);
       #endif
@@ -164,23 +164,23 @@ void stop()
   analogWrite(ENA,0);
   analogWrite(ENB,0);
 }
-void forward(int speedL, int speedR)
+void forward(int speedR, int speedL)
 {
   digitalWrite(IN1, HIGH);
   digitalWrite(IN2, LOW);
   digitalWrite(IN3, HIGH);
   digitalWrite(IN4, LOW);
-  analogWrite(ENA,speedL);
-  analogWrite(ENB,speedR);
+  analogWrite(ENA,speedR);
+  analogWrite(ENB,speedL);
 }
-void backward(int speedL, int speedR)
+void backward(int speedR, int speedL)
 {
   digitalWrite(IN1, LOW);
   digitalWrite(IN2, HIGH);
   digitalWrite(IN3, LOW);
   digitalWrite(IN4, HIGH);
-  analogWrite(ENA,speedL);
-  analogWrite(ENB,speedR);
+  analogWrite(ENA,speedR);
+  analogWrite(ENB,speedL);
 }
 void turnLeft(int speeds)
 {
@@ -188,8 +188,8 @@ void turnLeft(int speeds)
   digitalWrite(IN2, LOW);
   digitalWrite(IN3, LOW);
   digitalWrite(IN4, LOW);
-  analogWrite(ENA,0);
-  analogWrite(ENB,speeds);
+  analogWrite(ENA,speeds);
+  analogWrite(ENB,0);
 }
 void turnRight(int speeds)
 {
@@ -197,6 +197,6 @@ void turnRight(int speeds)
   digitalWrite(IN2, LOW);
   digitalWrite(IN3, HIGH);
   digitalWrite(IN4, LOW);
-  analogWrite(ENA,speeds);
-  analogWrite(ENB,0);
+  analogWrite(ENA,0);
+  analogWrite(ENB,speeds);
 }
